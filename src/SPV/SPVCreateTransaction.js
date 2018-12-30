@@ -5,6 +5,7 @@ import Main from '../Main/Main'
 import { Table } from 'semantic-ui-react';
 
 import { subscribeToTimer } from '../Api/Api';
+import { QRCode } from "qrcode"
 import openSocket from 'socket.io-client';
 const socket = openSocket('http://localhost:8000');
 
