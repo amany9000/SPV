@@ -151,7 +151,7 @@ io.on('connection', (client) => {
         } 
       
       }
-      
+
       ans = ans + "\n";
       reply.data.to[0] = ans;
       var signature = await transSigCreate(reply);
@@ -160,7 +160,13 @@ io.on('connection', (client) => {
       console.log("pem",ans)
 
       console.log(reply)
-      fs.writeFileSync("./outputs/draft.json",JSON.stringify(reply,undefined,2)); 
+
+      QRCode.toDataURL(reply, function (err, url) {
+      console.log(url)
+      base64Img.img( url, `./src/images`, 'url', function(err, filepath) {
+      });
+    })
+
       delete reply,data1, signature
     }
     else{

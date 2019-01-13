@@ -9,6 +9,7 @@ import { QRCode } from "qrcode"
 import openSocket from 'socket.io-client';
 const socket = openSocket('http://localhost:8000');
 
+
 class SPVCreateTransaction extends Component {
 
     state = {
@@ -17,10 +18,11 @@ class SPVCreateTransaction extends Component {
         from:"",
         to:"",
         amount:"",
-        success:""
+        success:"",
+        showQR:false
     }
 
-    makeTransaction(today){
+    makeQR(today){
         // make transactions and send to the network
         const trans = {
             "class": "transaction",
@@ -35,16 +37,24 @@ class SPVCreateTransaction extends Component {
             "sellerSignature": ""
         }
         socket.emit('sendTransaction',trans);
+        socket.on('sendURL', async(rep) => {
+            console.log(rep)
+            if(rep){
+                this.setState{
+                    showQR: true
+                }
+            }            
+        });
     }
       
     discard(){
-         this.setState({
+        this.setState({
              timestamp:"",
              landID:"",
              from:"",
              to:"",
              amount:""
-         });
+        });
     }
 
 
@@ -106,7 +116,7 @@ class SPVCreateTransaction extends Component {
                     </Table.Body>
                 </Table>
                 <div className="buttons">
-                    <button onClick={this.makeTransaction.bind(this, today)}> Download </button>
+                    <button onClick={this.makeQR.bind(this, today)}> Get QR Code </button>
                     {/* <button onClick={()=> { socket.emit('sendTransaction','huhu');}} > CREATE </button> */}
                     <button onClick={this.discard.bind(this)} > DISCARD </button>
                 </div>
