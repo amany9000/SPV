@@ -40,9 +40,9 @@ class SPVCreateTransaction extends Component {
         socket.on('sendURL', async(rep) => {
             console.log(rep)
             if(rep){
-                this.setState{
+                this.setState({
                     showQR: true
-                }
+                })
             }            
         });
     }

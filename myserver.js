@@ -11,6 +11,7 @@ const openSocket = require("socket.io-client")
 const {transSigCreate} = require("./sign.js");
 const {checkBranch}  =require("./spv.js")
 var base64Img = require('base64-img');
+var QRCode = require('qrcode')
 
 const peers = {}
 // Counter for connections, used to identify connections
@@ -157,11 +158,11 @@ io.on('connection', (client) => {
       var signature = await transSigCreate(reply);
       reply["buyerSignature"] = signature;
 
-      console.log("pem",ans)
+      //console.log("pem",ans)
 
-      console.log(reply)
+      console.log("rep",reply)
 
-      QRCode.toDataURL(reply, function (err, url) {
+      QRCode.toDataURL(JSON.stringify(reply,undefined,2), function (err, url) {
       console.log(url)
       base64Img.img( url, `./src/images`, 'url', function(err, filepath) {
       });

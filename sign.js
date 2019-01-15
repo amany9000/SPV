@@ -7,7 +7,7 @@ const transSigCreate = async (trans) => {
     const data = b64u.encode(transString);
     const signUser = crypto.createSign('SHA256');
     signUser.update(data);
-    const privateKeyUser = await fs.readFileSync('private.pem').toString();
+    const privateKeyUser = await fs.readFileSync('private1.pem').toString();
     const signatureUser = await signUser.sign(privateKeyUser, 'base64');
     return signatureUser;
 } 
